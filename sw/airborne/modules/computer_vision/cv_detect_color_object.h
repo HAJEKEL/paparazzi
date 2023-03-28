@@ -55,6 +55,8 @@ extern uint8_t cod_cb_max1_white;
 extern uint8_t cod_cr_min1_white;
 extern uint8_t cod_cr_max1_white;
 
+extern uint32_t cod_white_threshold;
+
 // green
 
 extern uint8_t cod_lum_min1_green;
@@ -63,6 +65,8 @@ extern uint8_t cod_cb_min1_green;
 extern uint8_t cod_cb_max1_green;
 extern uint8_t cod_cr_min1_green;
 extern uint8_t cod_cr_max1_green;
+
+extern uint32_t cod_green_threshold;
 
 
 extern bool cod_draw1;

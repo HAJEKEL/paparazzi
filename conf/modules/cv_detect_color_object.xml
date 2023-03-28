@@ -67,6 +67,7 @@
          <dl_setting var="cod_cr_min1_white"   min="0" step="1" max="255" shortname="v_min3"/>
          <dl_setting var="cod_cr_max1_white"   min="0" step="1" max="255" shortname="v_max3"/>
          <dl_setting var="cod_draw_white"  min="0" step="1" max="1" values="False|True" shortname="draw 3" />
+         <dl_setting var="cod_white_threshold"   min="0" step="1000" max="100000" shortname="w_threshold"/>
          
          <dl_setting var="cod_lum_min1_green" min="0" step="1" max="255" shortname="y_min4"/>
          <dl_setting var="cod_lum_max1_green" min="0" step="1" max="255" shortname="y_max4"/>
@@ -75,6 +76,7 @@
          <dl_setting var="cod_cr_min1_green"   min="0" step="1" max="255" shortname="v_min4"/>
          <dl_setting var="cod_cr_max1_green"   min="0" step="1" max="255" shortname="v_max4"/>
          <dl_setting var="cod_draw_green"  min="0" step="1" max="1" values="False|True" shortname="draw 4" />
+         <dl_setting var="cod_green_threshold"   min="0" step="1000" max="100000" shortname="g_threshold"/>
       </dl_settings>
     </dl_settings>
   </settings>

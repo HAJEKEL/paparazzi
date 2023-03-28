@@ -76,7 +76,8 @@ uint8_t cod_cb_max1_green = 0;
 uint8_t cod_cr_min1_green = 0;
 uint8_t cod_cr_max1_green = 0;
 
-uint32_t green_threshold = 8547;
+// uint32_t green_threshold = 8547;
+uint32_t cod_green_threshold = 0;
 
 uint8_t cod_lum_min1_white = 0;
 uint8_t cod_lum_max1_white = 0;
@@ -85,7 +86,8 @@ uint8_t cod_cb_max1_white = 0;
 uint8_t cod_cr_min1_white = 0;
 uint8_t cod_cr_max1_white = 0;
 
-uint32_t white_threshold = 46248;
+// uint32_t white_threshold = 46248;
+uint32_t cod_white_threshold = 0;
 
 bool cod_draw1 = false;
 bool cod_draw2 = false;
@@ -99,7 +101,7 @@ struct color_object_t {
   uint32_t color_count;
   bool updated;
 };
-struct color_object_t global_filters[4];
+struct color_object_t global_filters[2];
 
 // Function
 uint32_t find_object_centroid(struct image_t *img, int32_t* p_xc, int32_t* p_yc, bool draw,
@@ -124,6 +126,8 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
   uint8_t lum_min_g, lum_max_g;
   uint8_t cb_min_g, cb_max_g;
   uint8_t cr_min_g, cr_max_g;
+  uint32_t white_threshold;
+  uint32_t green_threshold;
   bool draw;
   bool draw_white;
   bool draw_green;
@@ -146,6 +150,7 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
       cr_min_w = cod_cr_min1_white;
       cr_max_w = cod_cr_max1_white;
       draw_white = cod_draw_white;
+      white_threshold = cod_white_threshold;
 
       // Green
       lum_min_g = cod_lum_min1_green;
@@ -155,6 +160,7 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
       cr_min_g = cod_cr_min1_green;
       cr_max_g = cod_cr_max1_green;
       draw_green = cod_draw_green;
+      green_threshold = cod_green_threshold;
       break;
     case 2:
       lum_min = cod_lum_min2;
@@ -173,6 +179,7 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
       cr_min_w = cod_cr_min1_white;
       cr_max_w = cod_cr_max1_white;
       draw_white = cod_draw_white;
+      white_threshold = cod_white_threshold;
 
       // Green
       lum_min_g = cod_lum_min1_green;
@@ -182,6 +189,7 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
       cr_min_g = cod_cr_min1_green;
       cr_max_g = cod_cr_max1_green;
       draw_green = cod_draw_green;
+      green_threshold = cod_green_threshold;
       break;
     default:
       return img;
@@ -213,16 +221,6 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
   global_filters[filter-1].x_c = x_c;
   global_filters[filter-1].y_c = y_c;
   global_filters[filter-1].updated = true;
-
-  global_filters[2].color_count = count_white;
-  global_filters[2].x_c = x_c_white;
-  global_filters[2].y_c = y_c_white;
-  global_filters[2].updated = true;
-
-  global_filters[3].color_count = count_green;
-  global_filters[3].x_c = x_c_green;
-  global_filters[3].y_c = y_c_green;
-  global_filters[3].updated = true;
   pthread_mutex_unlock(&mutex);
 
   return img;
@@ -267,6 +265,9 @@ void color_object_detector_init(void)
   cod_cb_max1_green = COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN;
   cod_cr_min1_green = COLOR_OBJECT_DETECTOR_CR_MIN1_GREEN;
   cod_cr_max1_green = COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN;
+
+  cod_green_threshold = COLOR_OBJECT_DETECTOR_GREEN_THRESHOLD;
+  cod_white_threshold = COLOR_OBJECT_DETECTOR_WHITE_THRESHOLD;
 #endif
 #ifdef COLOR_OBJECT_DETECTOR_DRAW1
   cod_draw1 = COLOR_OBJECT_DETECTOR_DRAW1;
