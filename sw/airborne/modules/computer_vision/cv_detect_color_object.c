@@ -60,6 +60,8 @@ uint8_t cod_cb_max1 = 0;
 uint8_t cod_cr_min1 = 0;
 uint8_t cod_cr_max1 = 0;
 
+//uint32_t orange_threshold = 
+
 uint8_t cod_lum_min2 = 0;
 uint8_t cod_lum_max2 = 0;
 uint8_t cod_cb_min2 = 0;
@@ -74,12 +76,16 @@ uint8_t cod_cb_max1_green = 0;
 uint8_t cod_cr_min1_green = 0;
 uint8_t cod_cr_max1_green = 0;
 
+uint32_t green_threshold = 8547;
+
 uint8_t cod_lum_min1_white = 0;
 uint8_t cod_lum_max1_white = 0;
 uint8_t cod_cb_min1_white = 0;
 uint8_t cod_cb_max1_white = 0;
 uint8_t cod_cr_min1_white = 0;
 uint8_t cod_cr_max1_white = 0;
+
+uint32_t white_threshold = 46248;
 
 bool cod_draw1 = false;
 bool cod_draw2 = false;
@@ -186,7 +192,7 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
   int32_t x_c_green, y_c_green;
 
   // Filter and find centroid
-  uint32_t count = find_object_centroid(img, &x_c, &y_c, draw, lum_min, lum_max, cb_min, cb_max, cr_min, cr_max);
+  uint32_t count_orange = find_object_centroid(img, &x_c, &y_c, draw, lum_min, lum_max, cb_min, cb_max, cr_min, cr_max);
   uint32_t count_green = find_object_centroid(img, &x_c_green, &y_c_green, draw_green, lum_min_g, lum_max_g, cb_min_g, cb_max_g, cr_min_g, cr_max_g);
   uint32_t count_white = find_object_centroid(img, &x_c_white, &y_c_white, draw_white, lum_min_w, lum_max_w, cb_min_w, cb_max_w, cr_min_w, cr_max_w);
   VERBOSE_PRINT("Color count %d: %u, threshold %u, x_c %d, y_c %d\n", camera, object_count, count_threshold, x_c, y_c);
@@ -194,9 +200,16 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
   VERBOSE_PRINT("Green count %d: %u, threshold %u, x_c %d, y_c %d\n", camera, object_count_green, count_threshold_green, x_c_green, y_c_green);
   VERBOSE_PRINT("centroid %d: (%d, %d) r: %4.2f a: %4.2f\n", camera, x_c, y_c,
         hypotf(x_c, y_c) / hypotf(img->w * 0.5, img->h * 0.5), RadOfDeg(atan2f(y_c, x_c)));
+        
+  uint8_t threshold_surpassed = 0; // number of colors surpassing the thresholds
+  if (count_green > green_threshold) threshold_surpassed++;
+  if (count_white > white_threshold) threshold_surpassed++;
+  
+  uint32_t count = 0;
+  if (threshold_surpassed > 0) count = 100000;
 
   pthread_mutex_lock(&mutex);
-  global_filters[filter-1].color_count = count + count_white + count_green;
+  global_filters[filter-1].color_count = count; // 0: no critical color counts, 100000: at least one threshold surpassed
   global_filters[filter-1].x_c = x_c;
   global_filters[filter-1].y_c = y_c;
   global_filters[filter-1].updated = true;
