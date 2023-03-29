@@ -69,6 +69,7 @@ uint8_t cod_cb_max2 = 0;
 uint8_t cod_cr_min2 = 0;
 uint8_t cod_cr_max2 = 0;
 
+// GREEN
 uint8_t cod_lum_min1_green = 0;
 uint8_t cod_lum_max1_green = 0;
 uint8_t cod_cb_min1_green = 0;
@@ -79,6 +80,7 @@ uint8_t cod_cr_max1_green = 0;
 // uint32_t green_threshold = 8547;
 uint32_t cod_green_threshold = 0;
 
+// WHITE
 uint8_t cod_lum_min1_white = 0;
 uint8_t cod_lum_max1_white = 0;
 uint8_t cod_cb_min1_white = 0;
@@ -89,10 +91,35 @@ uint8_t cod_cr_max1_white = 0;
 // uint32_t white_threshold = 46248;
 uint32_t cod_white_threshold = 0;
 
+// BLACK
+uint8_t cod_lum_min1_black = 0;
+uint8_t cod_lum_max1_black = 0;
+uint8_t cod_cb_min1_black = 0;
+uint8_t cod_cb_max1_black = 0;
+uint8_t cod_cr_min1_black = 0;
+uint8_t cod_cr_max1_black = 0;
+
+// uint32_t white_threshold = 46248;
+uint32_t cod_black_threshold = 0;
+
+// RAINBOW
+uint8_t cod_lum_min1_rainbow = 0;
+uint8_t cod_lum_max1_rainbow = 0;
+uint8_t cod_cb_min1_rainbow = 0;
+uint8_t cod_cb_max1_rainbow = 0;
+uint8_t cod_cr_min1_rainbow = 0;
+uint8_t cod_cr_max1_rainbow = 0;
+
+// uint32_t white_threshold = 46248;
+uint32_t cod_rainbow_threshold = 0;
+
+
 bool cod_draw1 = false;
 bool cod_draw2 = false;
 bool cod_draw_white = false;
 bool cod_draw_green = false;
+bool cod_draw_black = false;
+bool cod_draw_rainbow = false;
 
 // define global variables
 struct color_object_t {
@@ -126,11 +153,21 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
   uint8_t lum_min_g, lum_max_g;
   uint8_t cb_min_g, cb_max_g;
   uint8_t cr_min_g, cr_max_g;
+  uint8_t lum_min_b, lum_max_b;
+  uint8_t cb_min_b, cb_max_b;
+  uint8_t cr_min_b, cr_max_b;
+  uint8_t lum_min_rb, lum_max_rb;
+  uint8_t cb_min_rb, cb_max_rb;
+  uint8_t cr_min_rb, cr_max_rb;
   uint32_t white_threshold;
   uint32_t green_threshold;
+  uint32_t black_threshold;
+  uint32_t rainbow_threshold;
   bool draw;
   bool draw_white;
   bool draw_green;
+  bool draw_black;
+  bool draw_rainbow;
 
   switch (filter){
     case 1:
@@ -161,6 +198,26 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
       cr_max_g = cod_cr_max1_green;
       draw_green = cod_draw_green;
       green_threshold = cod_green_threshold;
+
+      // Black
+      lum_min_b = cod_lum_min1_black;
+      lum_max_b = cod_lum_max1_black;
+      cb_min_b = cod_cb_min1_black;
+      cb_max_b = cod_cb_max1_black;
+      cr_min_b = cod_cr_min1_black;
+      cr_max_b = cod_cr_max1_black;
+      draw_black = cod_draw_black;
+      black_threshold = cod_black_threshold;
+
+      // Rainbow
+      lum_min_rb = cod_lum_min1_rainbow;
+      lum_max_rb = cod_lum_max1_rainbow;
+      cb_min_rb = cod_cb_min1_rainbow;
+      cb_max_rb = cod_cb_max1_rainbow;
+      cr_min_rb = cod_cr_min1_rainbow;
+      cr_max_rb = cod_cr_max1_rainbow;
+      draw_rainbow = cod_draw_rainbow;
+      rainbow_threshold = cod_rainbow_threshold;
       break;
     case 2:
       lum_min = cod_lum_min2;
@@ -190,6 +247,26 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
       cr_max_g = cod_cr_max1_green;
       draw_green = cod_draw_green;
       green_threshold = cod_green_threshold;
+
+      // Black
+      lum_min_b = cod_lum_min1_black;
+      lum_max_b = cod_lum_max1_black;
+      cb_min_b = cod_cb_min1_black;
+      cb_max_b = cod_cb_max1_black;
+      cr_min_b = cod_cr_min1_black;
+      cr_max_b = cod_cr_max1_black;
+      draw_black = cod_draw_black;
+      black_threshold = cod_black_threshold;
+
+      // Rainbow
+      lum_min_rb = cod_lum_min1_rainbow;
+      lum_max_rb = cod_lum_max1_rainbow;
+      cb_min_rb = cod_cb_min1_rainbow;
+      cb_max_rb = cod_cb_max1_rainbow;
+      cr_min_rb = cod_cr_min1_rainbow;
+      cr_max_rb = cod_cr_max1_rainbow;
+      draw_rainbow = cod_draw_rainbow;
+      rainbow_threshold = cod_rainbow_threshold;
       break;
     default:
       return img;
@@ -198,11 +275,17 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
   int32_t x_c, y_c;
   int32_t x_c_white, y_c_white;
   int32_t x_c_green, y_c_green;
+  int32_t x_c_black, y_c_black;
+  int32_t x_c_rainbow, y_c_rainbow;
 
   // Filter and find centroid
   uint32_t count_orange = find_object_centroid(img, &x_c, &y_c, draw, lum_min, lum_max, cb_min, cb_max, cr_min, cr_max);
   uint32_t count_green = find_object_centroid(img, &x_c_green, &y_c_green, draw_green, lum_min_g, lum_max_g, cb_min_g, cb_max_g, cr_min_g, cr_max_g);
   uint32_t count_white = find_object_centroid(img, &x_c_white, &y_c_white, draw_white, lum_min_w, lum_max_w, cb_min_w, cb_max_w, cr_min_w, cr_max_w);
+  uint32_t count_black = find_object_centroid(img, &x_c_black, &y_c_black, draw_black, lum_min_b, lum_max_b, cb_min_b, cb_max_b, cr_min_b, cr_max_b);
+  uint32_t count_rainbow = find_object_centroid(img, &x_c_rainbow, &y_c_rainbow, draw_rainbow, lum_min_rb, lum_max_rb, cb_min_rb, cb_max_rb, cr_min_rb, cr_max_rb);
+  
+  
   VERBOSE_PRINT("Color count %d: %u, threshold %u, x_c %d, y_c %d\n", camera, object_count, count_threshold, x_c, y_c);
   VERBOSE_PRINT("White count %d: %u, threshold %u, x_c %d, y_c %d\n", camera, object_count_white, count_threshold_white, x_c_white, y_c_white);
   VERBOSE_PRINT("Green count %d: %u, threshold %u, x_c %d, y_c %d\n", camera, object_count_green, count_threshold_green, x_c_green, y_c_green);
@@ -212,6 +295,8 @@ static struct image_t *object_detector(struct image_t *img, uint8_t filter)
   uint8_t threshold_surpassed = 0; // number of colors surpassing the thresholds
   if (count_green > green_threshold) threshold_surpassed++;
   if (count_white > white_threshold) threshold_surpassed++;
+  if (count_black > black_threshold) threshold_surpassed++;
+  if (count_rainbow > rainbow_threshold) threshold_surpassed++;
   
   uint32_t count = 0;
   if (threshold_surpassed > 0) count = 100000;
@@ -265,9 +350,25 @@ void color_object_detector_init(void)
   cod_cb_max1_green = COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN;
   cod_cr_min1_green = COLOR_OBJECT_DETECTOR_CR_MIN1_GREEN;
   cod_cr_max1_green = COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN;
+    // Black
+  cod_lum_min1_black = COLOR_OBJECT_DETECTOR_LUM_MIN1_BLACK;
+  cod_lum_max1_black = COLOR_OBJECT_DETECTOR_LUM_MAX1_BLACK;
+  cod_cb_min1_black = COLOR_OBJECT_DETECTOR_CB_MIN1_BLACK;
+  cod_cb_max1_black = COLOR_OBJECT_DETECTOR_CB_MAX1_BLACK;
+  cod_cr_min1_black = COLOR_OBJECT_DETECTOR_CR_MIN1_BLACK;
+  cod_cr_max1_black = COLOR_OBJECT_DETECTOR_CR_MAX1_BLACK;
+  // Rainbow
+  cod_lum_min1_rainbow = COLOR_OBJECT_DETECTOR_LUM_MIN1_RAINBOW;
+  cod_lum_max1_rainbow = COLOR_OBJECT_DETECTOR_LUM_MAX1_RAINBOW;
+  cod_cb_min1_rainbow = COLOR_OBJECT_DETECTOR_CB_MIN1_RAINBOW;
+  cod_cb_max1_rainbow = COLOR_OBJECT_DETECTOR_CB_MAX1_RAINBOW;
+  cod_cr_min1_rainbow = COLOR_OBJECT_DETECTOR_CR_MIN1_RAINBOW;
+  cod_cr_max1_rainbow = COLOR_OBJECT_DETECTOR_CR_MAX1_RAINBOW;
 
   cod_green_threshold = COLOR_OBJECT_DETECTOR_GREEN_THRESHOLD;
   cod_white_threshold = COLOR_OBJECT_DETECTOR_WHITE_THRESHOLD;
+  cod_black_threshold = COLOR_OBJECT_DETECTOR_BLACK_THRESHOLD;
+  cod_rainbow_threshold = COLOR_OBJECT_DETECTOR_RAINBOW_THRESHOLD;
 #endif
 #ifdef COLOR_OBJECT_DETECTOR_DRAW1
   cod_draw1 = COLOR_OBJECT_DETECTOR_DRAW1;

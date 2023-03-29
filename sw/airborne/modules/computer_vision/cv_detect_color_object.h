@@ -68,11 +68,35 @@ extern uint8_t cod_cr_max1_green;
 
 extern uint32_t cod_green_threshold;
 
+// black
+
+extern uint8_t cod_lum_min1_black;
+extern uint8_t cod_lum_max1_black;
+extern uint8_t cod_cb_min1_black;
+extern uint8_t cod_cb_max1_black;
+extern uint8_t cod_cr_min1_black;
+extern uint8_t cod_cr_max1_black;
+
+extern uint32_t cod_black_threshold;
+
+// rainbow
+
+extern uint8_t cod_lum_min1_rainbow;
+extern uint8_t cod_lum_max1_rainbow;
+extern uint8_t cod_cb_min1_rainbow;
+extern uint8_t cod_cb_max1_rainbow;
+extern uint8_t cod_cr_min1_rainbow;
+extern uint8_t cod_cr_max1_rainbow;
+
+extern uint32_t cod_rainbow_threshold;
+
 
 extern bool cod_draw1;
 extern bool cod_draw2;
 extern bool cod_draw_white;
 extern bool cod_draw_green;
+extern bool cod_draw_black;
+extern bool cod_draw_rainbow;
 
 // Module functions
 extern void color_object_detector_init(void);

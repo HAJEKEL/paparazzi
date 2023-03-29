@@ -16,22 +16,13 @@
     <define name="COLOR_OBJECT_DETECTOR_CR_MAX1" value="0" description="Filter 1 max red chroma"/>
     <define name="COLOR_OBJECT_DETECTOR_DRAW1" value="FALSE|TRUE" description="Whether or not to draw on image"/>
 
-    <define name="COLOR_OBJECT_DETECTOR_CAMERA2" value="front_camera|bottom_camera" description="Video device to use"/>
-    <define name="COLOR_OBJECT_DETECTOR_FPS2" value="0" description="Desired FPS (0: camera rate)"/>
-    <define name="COLOR_OBJECT_DETECTOR_LUM_MIN2" value="0" description="Filter 1 min luminance"/>
-    <define name="COLOR_OBJECT_DETECTOR_LUM_MAX2" value="0" description="Filter 2 max luminance"/>
-    <define name="COLOR_OBJECT_DETECTOR_CB_MIN2" value="0" description="Filter 2 min blue chroma"/>
-    <define name="COLOR_OBJECT_DETECTOR_CB_MAX2" value="0" description="Filter 2 max blue chroma"/>
-    <define name="COLOR_OBJECT_DETECTOR_CR_MIN2" value="0" description="Filter 2 min red chroma"/>
-    <define name="COLOR_OBJECT_DETECTOR_CR_MAX2" value="0" description="Filter 2 max red chroma"/>
-    <define name="COLOR_OBJECT_DETECTOR_DRAW2" value="FALSE|TRUE" description="Whether or not to draw on image"/>
-
     <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_WHITE" value="0" description="Filter 1 min luminance"/>
     <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_WHITE" value="0" description="Filter 1 max luminance"/>
     <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_WHITE" value="0" description="Filter 1 min blue chroma"/>
     <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_WHITE" value="0" description="Filter 1 max blue chroma"/>
     <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_WHITE" value="0" description="Filter 1 min red chroma"/>
     <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_WHITE" value="0" description="Filter 1 max red chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_DRAW_WHITE" value="FALSE|TRUE" description="Whether or not to draw on image"/>
 
     <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_GREEN" value="0" description="Filter 1 min luminance"/>
     <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_GREEN" value="0" description="Filter 1 max luminance"/>
@@ -39,44 +30,71 @@
     <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN" value="0" description="Filter 1 max blue chroma"/>
     <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_GREEN" value="0" description="Filter 1 min red chroma"/>
     <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN" value="0" description="Filter 1 max red chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_DRAW_GREEN" value="FALSE|TRUE" description="Whether or not to draw on image"/>
+
+        <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_BLACK" value="0" description="Filter 1 min luminance"/>
+    <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_BLACK" value="0" description="Filter 1 max luminance"/>
+    <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_BLACK" value="0" description="Filter 1 min blue chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_BLACK" value="0" description="Filter 1 max blue chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_BLACK" value="0" description="Filter 1 min red chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_BLACK" value="0" description="Filter 1 max red chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_DRAW_BLACK" value="FALSE|TRUE" description="Whether or not to draw on image"/>
+
+    <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_RAINBOW" value="0" description="Filter 1 min luminance"/>
+    <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_RAINBOW" value="0" description="Filter 1 max luminance"/>
+    <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_RAINBOW" value="0" description="Filter 1 min blue chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_RAINBOW" value="0" description="Filter 1 max blue chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_RAINBOW" value="0" description="Filter 1 min red chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_RAINBOW" value="0" description="Filter 1 max red chroma"/>
+    <define name="COLOR_OBJECT_DETECTOR_DRAW_RAINBOW" value="FALSE|TRUE" description="Whether or not to draw on image"/>
   </doc>
 
   <settings>
     <dl_settings>
       <dl_settings name="ColorObjectDetector">
-         <dl_setting var="cod_lum_min1" min="0" step="1" max="255" shortname="y_min1"/>
-         <dl_setting var="cod_lum_max1" min="0" step="1" max="255" shortname="y_max1"/>
-         <dl_setting var="cod_cb_min1"   min="0" step="1" max="255" shortname="u_min1"/>
-         <dl_setting var="cod_cb_max1"   min="0" step="1" max="255" shortname="u_max1"/>
-         <dl_setting var="cod_cr_min1"   min="0" step="1" max="255" shortname="v_min1"/>
-         <dl_setting var="cod_cr_max1"   min="0" step="1" max="255" shortname="v_max1"/>
-         <dl_setting var="cod_draw1"  min="0" step="1" max="1" values="False|True" shortname="draw 1" />
+         <dl_setting var="cod_lum_min1" min="0" step="1" max="255" shortname="y_min1_orange"/>
+         <dl_setting var="cod_lum_max1" min="0" step="1" max="255" shortname="y_max1_orange"/>
+         <dl_setting var="cod_cb_min1"   min="0" step="1" max="255" shortname="u_min1_orange"/>
+         <dl_setting var="cod_cb_max1"   min="0" step="1" max="255" shortname="u_max1_orange"/>
+         <dl_setting var="cod_cr_min1"   min="0" step="1" max="255" shortname="v_min1_orange"/>
+         <dl_setting var="cod_cr_max1"   min="0" step="1" max="255" shortname="v_max1_orange"/>
+         <dl_setting var="cod_draw1"  min="0" step="1" max="1" values="False|True" shortname="draw 1_orange" />
 
-         <dl_setting var="cod_lum_min2" min="0" step="1" max="255" shortname="y_min2"/>
-         <dl_setting var="cod_lum_max2" min="0" step="1" max="255" shortname="y_max2"/>
-         <dl_setting var="cod_cb_min2"   min="0" step="1" max="255" shortname="u_min2"/>
-         <dl_setting var="cod_cb_max2"   min="0" step="1" max="255" shortname="u_max2"/>
-         <dl_setting var="cod_cr_min2"   min="0" step="1" max="255" shortname="v_min2"/>
-         <dl_setting var="cod_cr_max2"   min="0" step="1" max="255" shortname="v_max2"/>
-         <dl_setting var="cod_draw2"  min="0" step="1" max="1" values="False|True" shortname="draw 2" />
-
-         <dl_setting var="cod_lum_min1_white" min="0" step="1" max="255" shortname="y_min3"/>
-         <dl_setting var="cod_lum_max1_white" min="0" step="1" max="255" shortname="y_max3"/>
-         <dl_setting var="cod_cb_min1_white"   min="0" step="1" max="255" shortname="u_min3"/>
-         <dl_setting var="cod_cb_max1_white"   min="0" step="1" max="255" shortname="u_max3"/>
-         <dl_setting var="cod_cr_min1_white"   min="0" step="1" max="255" shortname="v_min3"/>
-         <dl_setting var="cod_cr_max1_white"   min="0" step="1" max="255" shortname="v_max3"/>
-         <dl_setting var="cod_draw_white"  min="0" step="1" max="1" values="False|True" shortname="draw 3" />
-         <dl_setting var="cod_white_threshold"   min="0" step="1000" max="100000" shortname="w_threshold"/>
+         <dl_setting var="cod_lum_min1_white" min="0" step="1" max="255" shortname="y_min3_white"/>
+         <dl_setting var="cod_lum_max1_white" min="0" step="1" max="255" shortname="y_max3_white"/>
+         <dl_setting var="cod_cb_min1_white"   min="0" step="1" max="255" shortname="u_min3_white"/>
+         <dl_setting var="cod_cb_max1_white"   min="0" step="1" max="255" shortname="u_max3_white"/>
+         <dl_setting var="cod_cr_min1_white"   min="0" step="1" max="255" shortname="v_min3_white"/>
+         <dl_setting var="cod_cr_max1_white"   min="0" step="1" max="255" shortname="v_max3_white"/>
+         <dl_setting var="cod_draw_white"  min="0" step="1" max="1" values="False|True" shortname="draw 3_white" />
+         <dl_setting var="cod_white_threshold"   min="0" step="1000" max="100000" shortname="white_threshold"/>
          
-         <dl_setting var="cod_lum_min1_green" min="0" step="1" max="255" shortname="y_min4"/>
-         <dl_setting var="cod_lum_max1_green" min="0" step="1" max="255" shortname="y_max4"/>
-         <dl_setting var="cod_cb_min1_green"   min="0" step="1" max="255" shortname="u_min4"/>
-         <dl_setting var="cod_cb_max1_green"   min="0" step="1" max="255" shortname="u_max4"/>
-         <dl_setting var="cod_cr_min1_green"   min="0" step="1" max="255" shortname="v_min4"/>
-         <dl_setting var="cod_cr_max1_green"   min="0" step="1" max="255" shortname="v_max4"/>
-         <dl_setting var="cod_draw_green"  min="0" step="1" max="1" values="False|True" shortname="draw 4" />
-         <dl_setting var="cod_green_threshold"   min="0" step="1000" max="100000" shortname="g_threshold"/>
+         <dl_setting var="cod_lum_min1_green" min="0" step="1" max="255" shortname="y_min4_green"/>
+         <dl_setting var="cod_lum_max1_green" min="0" step="1" max="255" shortname="y_max4_green"/>
+         <dl_setting var="cod_cb_min1_green"   min="0" step="1" max="255" shortname="u_min4_green"/>
+         <dl_setting var="cod_cb_max1_green"   min="0" step="1" max="255" shortname="u_max4_green"/>
+         <dl_setting var="cod_cr_min1_green"   min="0" step="1" max="255" shortname="v_min4_green"/>
+         <dl_setting var="cod_cr_max1_green"   min="0" step="1" max="255" shortname="v_max4_green"/>
+         <dl_setting var="cod_draw_green"  min="0" step="1" max="1" values="False|True" shortname="draw 4_green" />
+         <dl_setting var="cod_green_threshold"   min="0" step="1000" max="100000" shortname="green_threshold"/>
+
+         <dl_setting var="cod_lum_min1_black" min="0" step="1" max="255" shortname="y_min3_black"/>
+         <dl_setting var="cod_lum_max1_black" min="0" step="1" max="255" shortname="y_max3_black"/>
+         <dl_setting var="cod_cb_min1_black"   min="0" step="1" max="255" shortname="u_min3_black"/>
+         <dl_setting var="cod_cb_max1_black"   min="0" step="1" max="255" shortname="u_max3_black"/>
+         <dl_setting var="cod_cr_min1_black"   min="0" step="1" max="255" shortname="v_min3_black"/>
+         <dl_setting var="cod_cr_max1_black"   min="0" step="1" max="255" shortname="v_max3_black"/>
+         <dl_setting var="cod_draw_black"  min="0" step="1" max="1" values="False|True" shortname="draw 3_black" />
+         <dl_setting var="cod_black_threshold"   min="0" step="1000" max="100000" shortname="black_threshold"/>
+         
+         <dl_setting var="cod_lum_min1_rainbow" min="0" step="1" max="255" shortname="y_min4_rainbow"/>
+         <dl_setting var="cod_lum_max1_rainbow" min="0" step="1" max="255" shortname="y_max4_rainbow"/>
+         <dl_setting var="cod_cb_min1_rainbow"   min="0" step="1" max="255" shortname="u_min4_rainbow"/>
+         <dl_setting var="cod_cb_max1_rainbow"   min="0" step="1" max="255" shortname="u_max4_rainbow"/>
+         <dl_setting var="cod_cr_min1_rainbow"   min="0" step="1" max="255" shortname="v_min4_rainbow"/>
+         <dl_setting var="cod_cr_max1_rainbow"   min="0" step="1" max="255" shortname="v_max4_rainbow"/>
+         <dl_setting var="cod_draw_rainbow"  min="0" step="1" max="1" values="False|True" shortname="draw 4_rainbow" />
+         <dl_setting var="cod_rainbow_threshold"   min="0" step="1000" max="100000" shortname="rainbow_threshold"/>
       </dl_settings>
     </dl_settings>
   </settings>

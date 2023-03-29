@@ -33,22 +33,40 @@
       <define name="COLOR_OBJECT_DETECTOR_CR_MAX1" value="249"/>
 
       <!-- Detect white -->
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_WHITE" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_WHITE" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_WHITE" value="213"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_WHITE" value="255"/>
       <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_WHITE" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_WHITE" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_WHITE" value="255"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_WHITE" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_WHITE" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_WHITE_THRESHOLD" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_WHITE" value="255"/>
+      <define name="COLOR_OBJECT_DETECTOR_WHITE_THRESHOLD" value="46248"/>
 
       <!-- Detect green -->
       <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_GREEN" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_GREEN" value="255"/>
       <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN" value="116"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_GREEN_THRESHOLD" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN" value="145"/>
+      <define name="COLOR_OBJECT_DETECTOR_GREEN_THRESHOLD" value="8547"/>
+
+            <!-- Detect black -->
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_BLACK" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_BLACK" value="115"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_BLACK" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_BLACK" value="127"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_BLACK" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_BLACK" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_BLACK_THRESHOLD" value="255"/>
+
+      <!-- Detect rainbow -->
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_RAINBOW" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_RAINBOW" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_RAINBOW" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_RAINBOW" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_RAINBOW" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_RAINBOW" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_RAINBOW_THRESHOLD" value="0"/>
     </target>
     
     <define name="ARRIVED_AT_WAYPOINT" value="0.5"/><!-- Detect arrival at waypoint when within 0.5m -->
