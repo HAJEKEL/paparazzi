@@ -14,10 +14,10 @@
       <!-- Detect orange -->
       <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1" value="30"/>
       <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1" value="190"/>
-      <define name="COLOR_OBJECT_DETECTOR_CB_MIN1" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MIN1" value="70"/>
       <define name="COLOR_OBJECT_DETECTOR_CB_MAX1" value="130"/>
-      <define name="COLOR_OBJECT_DETECTOR_CR_MIN1" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1" value="0"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MIN1" value="150"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1" value="190"/>
 
             <!-- Detect white -->
       <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_WHITE" value="213"/>
@@ -26,25 +26,25 @@
       <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_WHITE" value="255"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_WHITE" value="0"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_WHITE" value="255"/>
-      <define name="COLOR_OBJECT_DETECTOR_WHITE_THRESHOLD" value="46248"/>
+      <define name="COLOR_OBJECT_DETECTOR_WHITE_THRESHOLD" value="45000"/>
 
       <!-- Detect green -->
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_GREEN" value="255"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_GREEN" value="100"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_GREEN" value="114"/>
       <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN" value="116"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN" value="126"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN" value="145"/>
-      <define name="COLOR_OBJECT_DETECTOR_GREEN_THRESHOLD" value="8547"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN" value="155"/>
+      <define name="COLOR_OBJECT_DETECTOR_GREEN_THRESHOLD" value="3000"/>
 
             <!-- Detect black -->
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_BLACK" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_BLACK" value="115"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_BLACK" value="40"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_BLACK" value="114"/>
       <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_BLACK" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_BLACK" value="127"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_BLACK" value="126"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_BLACK" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_BLACK" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_BLACK_THRESHOLD" value="255"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_BLACK" value="165"/>
+      <define name="COLOR_OBJECT_DETECTOR_BLACK_THRESHOLD" value="20000"/>
 
       <!-- Detect rainbow -->
       <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_RAINBOW" value="0"/>
@@ -75,25 +75,25 @@
       <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_WHITE" value="255"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_WHITE" value="0"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_WHITE" value="255"/>
-      <define name="COLOR_OBJECT_DETECTOR_WHITE_THRESHOLD" value="46248"/>
+      <define name="COLOR_OBJECT_DETECTOR_WHITE_THRESHOLD" value="45000"/>
 
       <!-- Detect green -->
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_GREEN" value="255"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_GREEN" value="100"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_GREEN" value="114"/>
       <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN" value="116"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_GREEN" value="126"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_GREEN" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN" value="145"/>
-      <define name="COLOR_OBJECT_DETECTOR_GREEN_THRESHOLD" value="8547"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_GREEN" value="155"/>
+      <define name="COLOR_OBJECT_DETECTOR_GREEN_THRESHOLD" value="3000"/>
 
             <!-- Detect black -->
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_BLACK" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_BLACK" value="115"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_BLACK" value="40"/>
+      <define name="COLOR_OBJECT_DETECTOR_LUM_MAX1_BLACK" value="114"/>
       <define name="COLOR_OBJECT_DETECTOR_CB_MIN1_BLACK" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_BLACK" value="127"/>
+      <define name="COLOR_OBJECT_DETECTOR_CB_MAX1_BLACK" value="126"/>
       <define name="COLOR_OBJECT_DETECTOR_CR_MIN1_BLACK" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_BLACK" value="0"/>
-      <define name="COLOR_OBJECT_DETECTOR_BLACK_THRESHOLD" value="255"/>
+      <define name="COLOR_OBJECT_DETECTOR_CR_MAX1_BLACK" value="165"/>
+      <define name="COLOR_OBJECT_DETECTOR_BLACK_THRESHOLD" value="20000"/>
 
       <!-- Detect rainbow -->
       <define name="COLOR_OBJECT_DETECTOR_LUM_MIN1_RAINBOW" value="0"/>
