@@ -380,6 +380,13 @@ PRINT_CONFIG_VAR(OPTICFLOW_SHOW_FLOW_CAMERA2)
 struct MedianFilter3Float vel_filt;
 struct FloatRMat body_to_cam[2];
 
+// Initialize global variables
+int collision_detection_threshold = 7; // 3 consecutive or 3 in 4 frames with dection
+int other_obstacle_threshold = 3; // 3 consecutive detections
+int n_collision_detections = 0;
+int n_upper_detections = 0;
+int n_lower_detections = 0;
+
 /* Functions only used here */
 static uint32_t timeval_diff(struct timeval *starttime, struct timeval *finishtime);
 static int cmp_flow(const void *a, const void *b);
@@ -492,6 +499,17 @@ void opticflow_calc_init(struct opticflow_t opticflow[])
 bool calc_fast9_lukas_kanade(struct opticflow_t *opticflow, struct image_t *img,
                              struct opticflow_result_t *result)
 {
+  // Decrease the confidence counters
+  if (n_collision_detections > 0) {
+    n_collision_detections -= 1;
+  }
+  if (n_upper_detections > 0) {
+    n_upper_detections -= 1;
+  }
+  if (n_lower_detections > 0) {
+    n_lower_detections -= 1;
+  }
+
   if (opticflow->just_switched_method) {
     // Create the image buffers
     image_create(&opticflow->img_gray, img->w, img->h, IMAGE_GRAYSCALE);
@@ -687,6 +705,17 @@ bool calc_fast9_lukas_kanade(struct opticflow_t *opticflow, struct image_t *img,
     result->surface_roughness = 0.0f;
   }
 
+  // *************************************************************************************
+  // INJECTED CODE
+  // undistort, derotate the flow vectors
+  // *************************************************************************************
+  // undistort the flow vectors using Dhane_undistortion function from sw/modules/computer_vision/lib/vision/undistortion.c
+
+  // Run undistortion for all vectors
+  
+
+  // *********** END OF INJECTED CODE
+  
   // Get the median flow
   qsort(vectors, result->tracked_cnt, sizeof(struct flow_t), cmp_flow);
   if (result->tracked_cnt == 0) {
@@ -773,6 +802,109 @@ bool calc_fast9_lukas_kanade(struct opticflow_t *opticflow, struct image_t *img,
     }
   }
   result->camera_id = opticflow->id;
+
+  // *************************************************************************************
+  // INJECTED CODE
+  // Classify flow vectors
+  // *************************************************************************************
+
+  uint32_t flow_origin_x = 0;
+  float flow_magnitude_x = 0.0f;
+  uint32_t c_x = 18; // TODO: check if this is true, due to resolution change
+  float dang_dt = 20.0f;  // Rotational velocity in deg/s
+  float scale_f = 20.0f / dang_dt;  // Scale factor for flow magnitude to fit decision boundaries
+
+  // Flags
+  bool collision_added = false;
+  bool lower_added = false;
+  bool upper_added = false;
+
+  // Decision boundary definitions
+  // Collision boundary
+  uint32_t x_coord_80deg = 128;  // TODO: find x coordinate of 80 degree angle
+  float col_up_intercept = 15.0f;  // Y-axis intercept of upper boundary
+  float col_final = 10.0f;  // Final value of boundary
+  float col_up_slope = (col_final - col_up_intercept) / (x_coord_80deg - c_x);  // Slope of upper boundary
+  float col_low_intercept = 0.0f;  // Y-axis intercept of lower boundary
+  float col_low_slope = (col_final - col_low_intercept) / (x_coord_80deg - c_x);  // Slope of lower boundary
+  // Lower radius boundary
+  uint32_t x_coord_lower_corner = 107;  // TODO: find x coordinate of 60 degree angle
+  float y_coord_lower_corner = 3.0f;  
+  float lower_final = 7.0f;
+  float lower_slope = (lower_final - y_coord_lower_corner) / (x_coord_80deg - x_coord_lower_corner);  // Slope of lower boundary
+  // Upper radius boundary
+  uint32_t x_coord_upper_min = 48;  // TODO: find x coordinate of 20 degree angle
+  uint32_t x_coord_upper_corner = 79; // TODO: find x coordinate of 40 degree angle
+  float y_coord_upper_min = 17.0f;
+  float y_coord_upper_corner = 13.5f;
+  float upper_final = 12.0f;
+  float upper_slope_min = (y_coord_upper_corner - y_coord_upper_min) / (x_coord_upper_corner - x_coord_upper_min);
+  float upper_slope_max = (upper_final - y_coord_upper_corner) / (x_coord_80deg - x_coord_upper_corner); 
+
+  for (int l = 0; l < result->tracked_cnt; l++) {
+    flow_origin_x = vectors[l].pos.x;
+    flow_magnitude_x = vectors[l].flow_x * scale_f;
+
+    // We are only interested in the flows on the right side of the image. Assuming left<right
+    if (flow_origin_x < c_x) {
+      continue;
+    }
+
+    // Check if its in the collision box
+    if (flow_origin_x < x_coord_80deg && flow_magnitude_x < (col_up_slope * (flow_origin_x - c_x) + col_up_intercept) &&
+        flow_magnitude_x > (col_low_slope * (flow_origin_x - c_x) + col_low_intercept)) {
+      // Check if obstacle on this path was already detected this cycle
+      if (!collision_added) {
+        n_collision_detections += 3;
+        if (n_collision_detections > collision_detection_threshold + 2){
+          n_collision_detections = collision_detection_threshold + 2;
+        }
+        collision_added = true;
+      }
+    }
+    else if ((flow_origin_x < x_coord_lower_corner && flow_magnitude_x < y_coord_lower_corner) || 
+          (flow_magnitude_x < lower_final && flow_magnitude_x > lower_slope * (flow_origin_x - x_coord_lower_corner) + y_coord_lower_corner)) {
+      if (!lower_added) {
+        n_lower_detections += 2; // This is lower for lower persistence
+        if (n_lower_detections > other_obstacle_threshold + 2){
+          n_lower_detections = other_obstacle_threshold + 2;
+        }
+        lower_added = true;
+      }
+    }
+    else if (flow_origin_x > x_coord_upper_min && flow_origin_x < x_coord_upper_corner){
+      if (flow_magnitude_x < (y_coord_upper_min + upper_slope_min * (flow_origin_x - x_coord_upper_min))) {
+        if (!upper_added) {
+          n_upper_detections += 2; // This is lower for lower persistence
+          if (n_upper_detections > other_obstacle_threshold + 2){
+          n_upper_detections = other_obstacle_threshold + 2;
+        }
+          upper_added = true;
+        }
+      }
+    }
+    else if (flow_origin_x > x_coord_upper_corner){
+      if (flow_magnitude_x < (y_coord_upper_corner + upper_slope_max * (flow_origin_x - x_coord_upper_corner))) {
+        if (!upper_added) {
+          n_upper_detections += 2; // This is lower for lower persistence
+          if (n_upper_detections > other_obstacle_threshold + 2){
+            n_upper_detections = other_obstacle_threshold + 2;
+          }
+          upper_added = true;
+        }
+      }
+    }
+  }
+
+  // *************
+  // STORE EVERYHING IN THE RESULT
+  // *************
+  // result is an instance of the struct optical_flow_result_t from inter_thread_data.h
+  result->flow_x = n_collision_detections;
+  result->flow_y = n_lower_detections;
+  result->flow_der_x = n_upper_detections;
+
+  // *********** END OF INJECTED CODE
 
   // Velocity calculation
   // Right now this formula is under assumption that the flow only exist in the center axis of the camera.
